@@ -5,13 +5,13 @@ const productSchema = new mongoose.Schema(
     name: { type: String, required: true },
     desc: { type: String, required: true },
     category: { type: String, required: true },
-    subcategory: { type: String, required: true },
-    image: { type:Array,required:true},
+    subcategory: { type: String },
+    image: { type: Array, required: true },
     sizes: { type: Array, required: true },
     quantity: { type: Number, default: 1 },
     qty: { type: Number, default: 1 },
     price: { type: Number, required: true },
-    inStock: { type: Boolean, default: false }
+    inStock: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
