@@ -30,19 +30,19 @@ app.use(
 
 //mongoose;
 mongoose
-.connect(process.env.MONGO_URL, { useNewUrlParser: true })
-.then(() => {
-  console.log("db connected successfully");
-})
-.catch((err) => {
-  console.log(err);
-});
+  .connect(process.env.MONGO_URL, { useNewUrlParser: true })
+  .then(() => {
+    console.log("db connected successfully");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //middleware;
 app.use(
   cors({
     origin: true,
-    methods: ["GET", "POST", "HEAD"],
+    methods: ["GET", "POST", "HEAD", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -57,7 +57,6 @@ app.use("/api/contact", contactRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/address", addressRoute);
-
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Life,Design,Code");
