@@ -39,8 +39,8 @@ router.delete("/:id", verifyTokenAuthorization, async (req, res) => {
 //get Contact
 router.get("/:id", async (req, res) => {
   try {
-    const Contact = await Contact.findById(req.params.id);
-    res.status(200).json(Contact);
+    const contact = await Contact.findById(req.params.id);
+    res.status(200).json(contact);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -50,8 +50,8 @@ router.get("/:id", async (req, res) => {
 //get all Contact;
 router.get("/", async (req, res) => {
   try {
-    const Contact = await Contact.find();
-    res.status(200).json(Contact);
+    const contact = await Contact.find();
+    res.status(200).json(contact);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
