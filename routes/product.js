@@ -1,8 +1,12 @@
 const Product = require("../models/Product");
 const router = require("express").Router();
-const cloudinary = require('../utils/cloudinary');
-const {verifyToken,verifyTokenAuthorization,verifyTokenAdmin} = require("./verifyToken");
-const multer = require('multer');
+const cloudinary = require("../utils/cloudinary");
+const {
+  verifyToken,
+  verifyTokenAuthorization,
+  verifyTokenAdmin,
+} = require("./verifyToken");
+const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ dest: "../uploads" });
 const { uploader } = require("../utils/cloudinary");
@@ -12,29 +16,27 @@ const saveProduct = async (product) => {
   const savedProduct = await newProduct.save();
   console.log(savedProduct);
   return savedProduct;
-}
-
+};
 
 router.post("/", verifyTokenAdmin, upload.array("image"), async (req, res) => {
   try {
-    const sizesArray = req.body.sizes.split(',').map(size => size.trim());
-    const uploadPromises = req.files.map(async file => {
+    const sizesArray = req.body.sizes.split(",").map((size) => size.trim());
+    const uploadPromises = req.files.map(async (file) => {
       const result = await cloudinary.uploader.upload(file.path);
       return result;
     });
     const uploadResults = await Promise.all(uploadPromises);
-    const image = uploadResults.map(result => {
-      return {public_id:result.public_id, url:result.url}
+    const image = uploadResults.map((result) => {
+      return { public_id: result.public_id, url: result.url };
     });
-    const newProduct = {...req.body, image: image, sizes: sizesArray};
+    const newProduct = { ...req.body, image: image, sizes: sizesArray };
     const savedProduct = await saveProduct(newProduct);
     console.log(savedProduct);
     res.json({
       message: "Images uploaded successfully",
-      product: savedProduct
+      product: savedProduct,
     });
-  } 
-  catch (err) {
+  } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
