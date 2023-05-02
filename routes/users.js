@@ -47,8 +47,8 @@ router.delete("/:id", verifyTokenAdmin, async (req, res) => {
 router.get("/", verifyTokenAdmin, async (req, res) => {
   try {
     const users = await User.find({ isAdmin: false }, [
-      "fname",
-      "lname",
+      "firstName",
+      "lastName",
       "email",
       "phone",
       "createdAt",
