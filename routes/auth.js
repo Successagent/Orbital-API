@@ -44,6 +44,9 @@ router.post("/adminRegister", async (req, res) => {
       process.env.PASS_SEC
     ).toString(),
   });
+  if (req.body.secretKey !== `orbitalKey`) {
+    return res.status(401).json({ msg: `Wrong Admin Key` });
+  }
 
   try {
     const savedAdmin = await newAdmin.save();
